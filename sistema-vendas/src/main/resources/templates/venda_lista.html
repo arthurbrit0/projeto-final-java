@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de vendas</title>
+</head>
+<body>
+<h1>Vendas</h1>
+<form method="get" th:action="@{/vendas/listar}">
+    <label>Pesquisar por vendedor:</label>
+    <input type="text" name="vendedor" />
+    <button type="submit">Pesquisar</button>
+</form>
+<a th:href="@{/vendas/nova}">Registrar Nova Venda</a>
+<table border="1">
+    <tr>
+
+        <th>Data</th>
+        <th>Vendedor</th>
+        <th>Produtos</th>
+        <th>Valor Total</th>
+
+    </tr>
+    <tr th:each="venda : ${vendas}">
+        <td th:text="${#temporals.format(venda.data, 'dd/MM/yyyy HH:mm')}"></td>
+        <td th:text="${venda.vendedor}"></td>
+        <td>
+            <ul>
+                <li th:each="item : ${venda.itens}">
+                    <span th:text="${item.produto.nome}"></span> -
+                    <span th:text="${item.quantidade}"></span> unidades -
+                    R$<span th:text="${item.precoUnitario}"></span> cada
+                </li>
+            </ul>
+        </td>
+        <td>R$<span th:text="${venda.valorTotal}"></span></td>
+    </tr>
+</table>
+</body>
+</html>
+
+

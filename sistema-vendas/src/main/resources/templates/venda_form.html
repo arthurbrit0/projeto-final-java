@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registrar Venda</title>
+    <script type="text/javascript">
+        function adicionarItem() {
+            let itemIndexInput = document.getElementById('itemIndex');
+            let itemIndex = parseInt(itemIndexInput.value);
+            let template = document.querySelector('#item-template').innerHTML;
+            template = template.replace(/__INDEX__/g, itemIndex);
+            let opcoesHtml = document.getElementById('product-options').innerHTML;
+            template = template.replace('<!--OPTIONS-->', opcoesHtml);
+            let container = document.getElementById('itens-container');
+            container.insertAdjacentHTML('beforeend', template);
+            itemIndexInput.value = itemIndex + 1;
+        }
+    </script>
+</head>
+<body>
+<h1>Registrar Nova Venda</h1>
+<form th:action="@{/vendas/salvar}" th:object="${venda}" method="post">
+    <div>
+        <label>Nome do Vendedor:</label>
+        <input type="text" th:field="*{vendedor}" />
+        <div th:if="${#fields.hasErrors('vendedor')}" th:errors="*{vendedor}"></div>
+    </div>
+    <h2>Itens da Venda:</h2>
+    <div id="itens-container">
+        <div th:each="item, iterStat : *{itens}" class="item-venda">
+            <div>
+                <label>Produto:</label>
+                <select th:name="|itens[${iterStat.index}].produtoCodigo|">
+                    <option value="">Selecione</option>
+                    <option th:each="produto : ${produtos}"
+                            th:value="${produto.codigo}"
+                            th:text="${produto.nome}"
+                            th:selected="${produto.codigo == item.produtoCodigo}"></option>
+                </select>
+                <div th:if="${#fields.hasErrors('itens[' + iterStat.index + '].produtoCodigo')}">
+                    <span th:errors="*{itens[${iterStat.index}].produtoCodigo}"></span>
+                </div>
+            </div>
+
+            <div>
+                <label>Quantidade:</label>
+                <input type="number" th:name="|itens[${iterStat.index}].quantidade|" min="1"
+                       th:value="${item.quantidade}" required="required" />
+                <div th:if="${#fields.hasErrors('itens[' + iterStat.index + '].quantidade')}">
+                    <span th:errors="*{itens[${iterStat.index}].quantidade}"></span>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+    <input type="hidden" id="itemIndex" th:value="${#lists.size(venda.itens)}" />
+    <button type="button" onclick="adicionarItem()">Adicionar Item</button>
+    <br/><br/>
+    <button type="submit">Salvar Venda</button>
+</form>
+<div th:if="${erro}">
+    <p th:text="${erro}" style="color:red;"></p>
+</div>
+<div id="product-options" style="display:none;">
+    <option value="">Selecione</option>
+    <option th:each="produto : ${produtos}"
+            th:value="${produto.codigo}"
+            th:text="${produto.nome}"></option>
+</div>
+<div id="item-template" style="display:none;">
+    <div class="item-venda">
+        <div>
+            <label>Produto:</label>
+            <select name="itens[__INDEX__].produtoCodigo">
+                <!--OPTIONS-->
+            </select>
+        </div>
+        <div>
+            <label>Quantidade:</label>
+            <input type="number" name="itens[__INDEX__].quantidade" min="1" required="required" />
+        </div>
+        <hr/>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Produtos</title>
+</head>
+<body>
+<h1>Produtos Cadastrados</h1>
+<div th:if="${mensagemSucesso}" style="color: green;">
+    <p th:text="${mensagemSucesso}"></p>
+</div>
+<div th:if="${mensagemErro}" style="color: red;">
+    <p th:text="${mensagemErro}"></p>
+</div>
+<a th:href="@{/produtos/novo}">Cadastrar Novo Produto</a>
+<table border="1">
+    <tr>
+        <th>Nome</th>
+        <th>Código</th>
+        <th>Valor</th>
+        <th>Quantidade</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="produto : ${produtos}">
+        <td th:text="${produto.nome}"></td>
+        <td th:text="${produto.codigo}"></td>
+        <td>R$ <span th:text="${produto.valor}"></span></td>
+        <td th:text="${produto.quantidade}"></td>
+        <td>
+            <a th:href="@{'/produtos/editar/' + ${produto.id}}">Editar</a> |
+            <a th:href="@{'/produtos/excluir/' + ${produto.id}}"
+               onclick="return confirm('Tem certeza que deseja excluir este produto?');">Excluir</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
