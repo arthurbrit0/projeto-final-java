@@ -21,7 +21,7 @@ const FormProduto = () => {
         event.preventDefault();
         try {
             // Fazendo a requisição POST para salvar o produto
-            const response = await axios.post('localhost:8080/api/produtos/salvar', produto);
+            const response = await axios.post('http://localhost:8080/api/produtos/salvar', produto);
             setMensagem('Produto salvo com sucesso!');
             console.log('Produto salvo:', response.data);
         } catch (error) {
