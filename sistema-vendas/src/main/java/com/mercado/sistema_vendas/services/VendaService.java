@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
+import java.time.LocalTime;
 
 @Service
 public class VendaService {
@@ -43,6 +45,17 @@ public class VendaService {
         return vendaRepository.save(venda);
     }
 
+
+
+
+    private ItemVenda buscarItemExistente(Venda vendaExistente, String produtoCodigo) {
+        return vendaExistente.getItens().stream()
+                .filter(item -> item.getProdutoCodigo().equals(produtoCodigo))
+                .findFirst()
+                .orElse(new ItemVenda());
+    }
+
+
     private Double calcularValorTotal(List<ItemVenda> itens) {
         return itens.stream()
                 .mapToDouble(item -> item.getPrecoUnitario() * item.getQuantidade()).sum();
@@ -57,8 +70,20 @@ public class VendaService {
     }
 
     public Venda buscarPorId(Long id) {
-        return vendaRepository.findById(id).orElse(null);
+        Venda venda = vendaRepository.findById(id).orElse(null);
+
+        if (venda != null) {
+            // Preenche o produtoCodigo manualmente para cada ItemVenda
+            for (ItemVenda item : venda.getItens()) {
+                if (item.getProduto() != null) {
+                    item.setProdutoCodigo(item.getProduto().getCodigo()); // Preenche o código do produto
+                }
+            }
+        }
+
+        return venda;
     }
+
 
     public void excluirPorId(Long id) {
         Venda venda = vendaRepository.findById(id).orElse(null);
@@ -67,4 +92,15 @@ public class VendaService {
         }
         vendaRepository.deleteById(id);
     }
+
+
+
+    public List<Venda> buscarPorData(LocalDate dataVenda) {
+        LocalDateTime startOfDay = dataVenda.atStartOfDay(); // Início do dia
+        LocalDateTime endOfDay = dataVenda.atTime(LocalTime.MAX); // Fim do dia (23:59:59)
+
+        return vendaRepository.findByDataBetween(startOfDay, endOfDay);
+    }
+
+
 }
