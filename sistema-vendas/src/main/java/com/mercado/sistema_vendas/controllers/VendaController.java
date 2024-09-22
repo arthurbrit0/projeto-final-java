@@ -1,98 +1,73 @@
 package com.mercado.sistema_vendas.controllers;
-import com.mercado.sistema_vendas.models.ItemVenda;
-import com.mercado.sistema_vendas.models.Produto;
+
 import com.mercado.sistema_vendas.models.Venda;
-import com.mercado.sistema_vendas.services.ProdutoService;
 import com.mercado.sistema_vendas.services.VendaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.format.annotation.DateTimeFormat;  // Import para DateTimeFormat
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;  // Import para LocalDate
 import java.util.List;
 
-@Controller
-@RequestMapping("/vendas")
+@RestController
+@RequestMapping("/api/vendas")
 public class VendaController {
 
     @Autowired
     private VendaService vendaService;
-    @Autowired
-    private ProdutoService produtoService;
 
-    @GetMapping("/nova")
-    public String mostrarFormNovaVenda(Model model) {
-        Venda venda = new Venda();
-        venda.getItens().add(new ItemVenda()); // Adiciona um item vazio para o formulário
-
-        model.addAttribute("venda", venda);
-        model.addAttribute("produtos", produtoService.listarTodos());
-        return "venda_form";
-    }
-
-    @PostMapping("/salvar")
-
-    public String salvarVenda(@Valid @ModelAttribute Venda venda, BindingResult result, Model model) {
-        venda.getItens().removeIf(item -> item.getProdutoCodigo() == null || item.getProdutoCodigo().isEmpty());
-
-        for (int i=0; i < venda.getItens().size(); i++) {
-            ItemVenda item = venda.getItens().get(i);
-            if (item.getProdutoCodigo() != null && !item.getProdutoCodigo().isEmpty()) {
-                Produto produto = produtoService.buscarPorCodigo(item.getProdutoCodigo());
-                if (produto != null) {
-                    item.setProduto(produto);
-                    item.setPrecoUnitario(produto.getValor());
-                } else {
-
-                    result.rejectValue("itens[" + i + "].produtoCodigo", "error.itemVenda", "Produto não encontrado.");
-                }
-            } else {
-                result.rejectValue("itens[" + i + "].produtoCodigo", "error.itemVenda", "Selecione um produto.");
-            }
-
-            if (item.getQuantidade() == null || item.getQuantidade() <= 0) {
-                result.rejectValue("itens[" + i + "].quantidade", "error.itemVenda", "Quantidade deve ser maior que zero.");
-
-            }
-        }
-
-
-
-        if (result.hasErrors()) {
-            model.addAttribute("venda", venda);
-            model.addAttribute("produtos", produtoService.listarTodos());
-            return "venda_form";
-        }
+    // Listar todas as vendas ou buscar por vendedor ou data
+    @GetMapping("/listar")
+    public ResponseEntity<List<Venda>> listarVendas(
+            @RequestParam(value = "vendedor", required = false) String vendedor,
+            @RequestParam(value = "data", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataVenda) {
 
         try {
+            List<Venda> vendas;
 
-            vendaService.salvar(venda);
-            return "redirect:/vendas/listar";
+            if (vendedor != null && !vendedor.isEmpty()) {
+                vendas = vendaService.buscarPorVendedor(vendedor);
+            } else if (dataVenda != null) {
+                vendas = vendaService.buscarPorData(dataVenda);
+            } else {
+                vendas = vendaService.listarTodas();
+            }
 
+            return ResponseEntity.ok(vendas);
         } catch (Exception e) {
-            model.addAttribute("erro", e.getMessage());
-            model.addAttribute("venda", venda);
-            model.addAttribute("produtos", produtoService.listarTodos());
-            return "venda_form";
-
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    @GetMapping("/listar")
 
-    public String listarVendas(@RequestParam(value = "vendedor", required = false) String vendedor, Model model) {
 
-        List<Venda> vendas;
+    // Salvar nova venda
+    @PostMapping("/salvar")
+    public ResponseEntity<Venda> salvarVenda(@Valid @RequestBody Venda venda) throws Exception {
+        Venda vendaSalva = vendaService.salvar(venda);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vendaSalva);
+    }
 
-        if (vendedor != null && !vendedor.isEmpty()) {
-            vendas = vendaService.buscarPorVendedor(vendedor);
-        } else {
-            vendas = vendaService.listarTodas();
+
+
+    // Excluir venda
+    @DeleteMapping("/excluir/{id}")
+    public ResponseEntity<String> excluirVenda(@PathVariable Long id) {
+        vendaService.excluirPorId(id);
+        return ResponseEntity.ok("Venda excluída com sucesso.");
+    }
+
+    // Buscar venda por ID
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Venda> buscarVendaPorId(@PathVariable Long id) {
+        Venda venda = vendaService.buscarPorId(id);
+        if (venda == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        model.addAttribute("vendas", vendas);
-        return "venda_lista";
+        return ResponseEntity.ok(venda);
     }
 }
-
-

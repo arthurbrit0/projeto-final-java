@@ -1,4 +1,5 @@
 package com.mercado.sistema_vendas.models;
+
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -14,7 +15,8 @@ public class Venda {
     private Long id;
 
     private LocalDateTime data;
-    @NotBlank(message = "Nome e obrigatorio")
+
+    @NotBlank(message = "Vendedor é obrigatório")
     private String vendedor;
 
     @Valid
@@ -27,8 +29,15 @@ public class Venda {
     public Venda() {
         this.itens = new ArrayList<>();
     }
+
+    // Getters e Setters
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) { // Adicionado o método setId
+        this.id = id;
     }
 
     public LocalDateTime getData() {
@@ -38,6 +47,7 @@ public class Venda {
     public void setData(LocalDateTime data) {
         this.data = data;
     }
+
     public String getVendedor() {
         return vendedor;
     }
@@ -48,7 +58,6 @@ public class Venda {
 
     public List<ItemVenda> getItens() {
         if (this.itens == null) {
-
             this.itens = new ArrayList<>();
         }
         return itens;
@@ -56,7 +65,6 @@ public class Venda {
 
     public void setItens(List<ItemVenda> itens) {
         this.itens = itens;
-
     }
 
     public Double getValorTotal() {
@@ -67,5 +75,3 @@ public class Venda {
         this.valorTotal = valorTotal;
     }
 }
-
-

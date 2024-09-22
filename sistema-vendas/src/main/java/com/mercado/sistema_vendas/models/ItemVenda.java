@@ -1,14 +1,15 @@
 package com.mercado.sistema_vendas.models;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
 public class ItemVenda {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Transient
     private String produtoCodigo;
 
@@ -16,15 +17,16 @@ public class ItemVenda {
     @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
-    @NotNull(message = "Qtd é obrigatoria")
-    @Positive(message = "Qtd tem que ser +")
-
+    @NotNull(message = "Quantidade é obrigatória")
+    @Positive(message = "Quantidade deve ser positiva")
     private Integer quantidade;
 
-
     private Double precoUnitario;
+
     public ItemVenda() {
     }
+
+    // Getters e Setters
 
     public Long getId() {
         return id;
@@ -33,29 +35,32 @@ public class ItemVenda {
     public String getProdutoCodigo() {
         return produtoCodigo;
     }
+
     public void setProdutoCodigo(String produtoCodigo) {
         this.produtoCodigo = produtoCodigo;
     }
+
     public Produto getProduto() {
         return produto;
     }
+
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
+
     public Integer getQuantidade() {
         return quantidade;
-
     }
+
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
+
     public Double getPrecoUnitario() {
         return precoUnitario;
     }
+
     public void setPrecoUnitario(Double precoUnitario) {
         this.precoUnitario = precoUnitario;
     }
 }
-
-
-

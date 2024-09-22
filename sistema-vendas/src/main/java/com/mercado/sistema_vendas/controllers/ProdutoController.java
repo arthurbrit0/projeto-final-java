@@ -1,91 +1,58 @@
 package com.mercado.sistema_vendas.controllers;
+
 import com.mercado.sistema_vendas.models.Produto;
 import com.mercado.sistema_vendas.services.ProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
-@RequestMapping("/produtos")
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/produtos")
 public class ProdutoController {
+
     @Autowired
     private ProdutoService produtoService;
-    @GetMapping("/novo")
-    public String mostrarFormNovoProduto(Model model) {
-        model.addAttribute("produto", new Produto());
-        model.addAttribute("formAction", "/produtos/salvar");
-        return "produto_form";
+
+    // Listar todos os produtos
+    @GetMapping("/listar")
+    public ResponseEntity<List<Produto>> listarProdutos() {
+        List<Produto> produtos = produtoService.listarTodos();
+        return ResponseEntity.ok(produtos);
     }
 
+    // Salvar novo produto
     @PostMapping("/salvar")
-    public String salvarProduto(@Valid @ModelAttribute Produto produto, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("formAction", "/produtos/salvar");
-            return "produto_form";
-        }
-        try {
-
-            produtoService.salvar(produto);
-            return "redirect:/produtos/listar";
-        } catch (DataIntegrityViolationException e) {
-            result.rejectValue("codigo", "error.produto",
-                    "Código já existente. Por favor, escolha outro código.");
-            model.addAttribute("formAction", "/produtos/salvar");
-            return "produto_form";
-        } catch (Exception e) {
-            result.rejectValue(null, "error.produto", "Ocorreu um erro ao salvar o produto.");
-            model.addAttribute("formAction", "/produtos/salvar");
-            return "produto_form";
-        }
+    public ResponseEntity<Produto> salvarProduto(@Valid @RequestBody Produto produto) {
+        Produto produtoSalvo = produtoService.salvar(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
     }
 
-    @GetMapping("/editar/{id}")
-    public String mostrarFormEditarProduto(@PathVariable Long id, Model model) {
+    // Atualizar produto
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @Valid @RequestBody Produto produto) {
+        produto.setId(id);
+        Produto produtoAtualizado = produtoService.salvar(produto);
+        return ResponseEntity.ok(produtoAtualizado);
+    }
+
+    // Excluir produto
+    @DeleteMapping("/excluir/{id}")
+    public ResponseEntity<String> excluirProduto(@PathVariable Long id) {
+        produtoService.excluirPorId(id);
+        return ResponseEntity.ok("Produto excluído com sucesso.");
+    }
+
+    // Buscar produto por ID
+    @GetMapping("/buscar/{id}")
+    public ResponseEntity<Produto> buscarProdutoPorId(@PathVariable Long id) {
         Produto produto = produtoService.buscarPorId(id);
         if (produto == null) {
-            return "redirect:/produtos/listar";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        model.addAttribute("produto", produto);
-        model.addAttribute("formAction", "/produtos/atualizar/" + id);
-        return "produto_form";
-    }
-
-    @PostMapping("/atualizar/{id}")
-    public String atualizarProduto(@PathVariable Long id, @Valid @ModelAttribute Produto produto, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("formAction", "/produtos/atualizar/" + id);
-            return "produto_form";
-
-        }
-
-        produto.setId(id);
-        produtoService.salvar(produto);
-        return "redirect:/produtos/listar";
-    }
-
-    @GetMapping("/excluir/{id}")
-
-    public String excluirProduto(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        try {
-            produtoService.excluirPorId(id);
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Produto excluído com sucesso.");
-        } catch (Exception e) {
-
-            redirectAttributes.addFlashAttribute("mensagemErro", e.getMessage());
-        }
-        return "redirect:/produtos/listar";
-    }
-
-    @GetMapping("/listar")
-
-    public String listarProdutos(Model model) {
-
-        model.addAttribute("produtos", produtoService.listarTodos());
-        return "produto_lista";
+        return ResponseEntity.ok(produto);
     }
 }
