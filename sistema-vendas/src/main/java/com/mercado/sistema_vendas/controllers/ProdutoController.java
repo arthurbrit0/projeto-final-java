@@ -4,10 +4,8 @@ import com.mercado.sistema_vendas.models.Produto;
 import com.mercado.sistema_vendas.services.ProdutoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,42 +26,24 @@ public class ProdutoController {
 
     // Salvar novo produto
     @PostMapping("/salvar")
-    public ResponseEntity<?> salvarProduto(@Valid @RequestBody Produto produto, BindingResult result) {
-        if (result.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result.getFieldErrors());
-        }
-
-        try {
-            produtoService.salvar(produto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(produto);
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Código já existente. Por favor, escolha outro código.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocorreu um erro ao salvar o produto.");
-        }
+    public ResponseEntity<Produto> salvarProduto(@Valid @RequestBody Produto produto) {
+        Produto produtoSalvo = produtoService.salvar(produto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoSalvo);
     }
 
     // Atualizar produto
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<?> atualizarProduto(@PathVariable Long id, @Valid @RequestBody Produto produto, BindingResult result) {
-        if (result.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result.getFieldErrors());
-        }
-
+    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @Valid @RequestBody Produto produto) {
         produto.setId(id);
-        produtoService.salvar(produto);
-        return ResponseEntity.ok(produto);
+        Produto produtoAtualizado = produtoService.salvar(produto);
+        return ResponseEntity.ok(produtoAtualizado);
     }
 
     // Excluir produto
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<?> excluirProduto(@PathVariable Long id) {
-        try {
-            produtoService.excluirPorId(id);
-            return ResponseEntity.ok("Produto excluído com sucesso.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o produto.");
-        }
+    public ResponseEntity<String> excluirProduto(@PathVariable Long id) {
+        produtoService.excluirPorId(id);
+        return ResponseEntity.ok("Produto excluído com sucesso.");
     }
 
     // Buscar produto por ID

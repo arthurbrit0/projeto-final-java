@@ -1,94 +1,32 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './components/Home';
+import ProdutoList from './components/ProdutoList';
+import FormProduto from './components/FormProduto';
+import VendaList from './components/VendaList';
+import VendaForm from './components/VendaForm';
 
-const FormProduto = () => {
-    const [produto, setProduto] = useState({
-        nome: '',
-        descricao: '',
-        preco: 0,
-        quantidade: 0,
-        codigo: ''
-    });
+function App() {
+  return (
+    <Router>
+      <nav>
+        <ul>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/produtos">Produtos</Link></li>
+          <li><Link to="/produtos/nova">Novo Produto</Link></li>
+          <li><Link to="/vendas">Vendas</Link></li>
+          <li><Link to="/vendas/nova">Nova Venda</Link></li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/produtos" element={<ProdutoList />} />
+        <Route path="/produtos/nova" element={<FormProduto />} />
+        <Route path="/vendas" element={<VendaList />} />
+        <Route path="/vendas/nova" element={<VendaForm />} />
+      </Routes>
+    </Router>
+  );
+}
 
-    const [mensagem, setMensagem] = useState('');
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setProduto({ ...produto, [name]: value });
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            // Fazendo a requisição POST para salvar o produto
-            const response = await axios.post('http://localhost:8080/api/produtos/salvar', produto);
-            setMensagem('Produto salvo com sucesso!');
-            console.log('Produto salvo:', response.data);
-        } catch (error) {
-            console.error('Erro ao salvar o produto:', error.response?.data || error.message);
-            setMensagem('Erro ao salvar o produto.');
-        }
-    };
-
-    return (
-        <div>
-            <h2>Salvar Produto</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Nome:</label>
-                    <input
-                        type="text"
-                        name="nome"
-                        value={produto.nome}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Descrição:</label>
-                    <input
-                        type="text"
-                        name="descricao"
-                        value={produto.descricao}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Preço:</label>
-                    <input
-                        type="number"
-                        name="preco"
-                        value={produto.preco}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Quantidade:</label>
-                    <input
-                        type="number"
-                        name="quantidade"
-                        value={produto.quantidade}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Código:</label>
-                    <input
-                        type="text"
-                        name="codigo"
-                        value={produto.codigo}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <button type="submit">Salvar Produto</button>
-            </form>
-            {mensagem && <p>{mensagem}</p>}
-        </div>
-    );
-};
-
-export default FormProduto;
+export default App;
