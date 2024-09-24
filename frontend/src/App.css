@@ -1,38 +1,45 @@
-.App {
-  text-align: center;
+.fixo{
+    display: flex;
+    flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.titulo {
+    padding: 30px;
+    position: relative;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    font-size: 50px;
+    background: #FFFFFF;
+    font-family: 'ADLaM Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 90px;
+
+    color: #066699;
+
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.funcionalidades {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background: rgba(78, 215, 224, 0.4);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+.botao {
+    position: relative;
+    width: 159px;
+    height: 54px;
+    background: #066699;
+    border-radius: 50px;
 
-.App-link {
-  color: #61dafb;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+botao.hover {
+    opacity: 1;
 }
