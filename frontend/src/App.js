@@ -12,13 +12,7 @@ function App() {
         <Router>
             <nav  className= 'fixo'>
                 <h1 className='titulo'>Estante Digital</h1>
-                <ul className='funcionalidades'>
-                    <button className='botao'><Link to="/">Home</Link></button>
-                    <button className='botao'><Link to="/produtos">Produtos</Link></button>
-                    <button className='botao'><Link to="/produtos/nova">Novo Produto</Link></button>
-                    <button className='botao'><Link to="/vendas">Vendas</Link></button>
-                    <button className='botao'><Link to="/vendas/nova">Nova Venda</Link></button>
-                </ul>
+
             </nav>
             <Routes>
                 <Route path="/" element={<Home/>}/>
@@ -33,3 +27,12 @@ function App() {
 }
 
 export default App;
+
+
+/*<
+li className='botao'><Link to="/">Home</Link></li>
+                    <button className='botao'><Link to="/produtos">Produtos</Link></button>
+                    <button className='botao'><Link to="/produtos/nova">Novo Produto</Link></button>
+                    <button className='botao'><Link to="/vendas">Vendas</Link></button>
+                    <button className='botao'><Link to="/vendas/nova">Nova Venda</Link></button>
+                    */

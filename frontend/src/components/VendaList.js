@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
+import Menu from "./Menu";
 
 const VendaList = () => {
+
     const [vendas, setVendas] = useState([]);
     const [vendedor, setVendedor] = useState(''); // Estado para nome do vendedor
     const [dataVenda, setDataVenda] = useState(''); // Estado para data da venda
@@ -55,6 +58,7 @@ const VendaList = () => {
 
     return (
         <div>
+            <Menu/>
             <h2>Lista de Vendas</h2>
             <form onSubmit={handleSearch}>
                 <input
@@ -69,7 +73,8 @@ const VendaList = () => {
                     onChange={(e) => setDataVenda(e.target.value)} // Atualiza o estado da data
                 />
                 <button type="submit">Buscar</button>
-                <button type="button" onClick={handleClear}>Limpar</button> {/* Botão para limpar */}
+                <button type="button" onClick={handleClear}>Limpar</button>
+                {/* Botão para limpar */}
             </form>
             <table border="1">
                 <thead>
@@ -92,7 +97,8 @@ const VendaList = () => {
                             <ul>
                                 {venda.itens.map(item => (
                                     <li key={item.id}>
-                                        {item.produto.nome} - Quantidade: {item.quantidade} - Valor Total: R${(item.quantidade * item.precoUnitario).toFixed(2)}
+                                        {item.produto.nome} - Quantidade: {item.quantidade} - Valor Total:
+                                        R${(item.quantidade * item.precoUnitario).toFixed(2)}
                                     </li>
                                 ))}
                             </ul>

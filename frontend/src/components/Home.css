@@ -1,0 +1,20 @@
+.mensagem {
+    /* Seja bem-vinde à sua biblioteca online */
+
+    position: absolute;
+    width: 920px;
+    height: 159px;
+    left: 222px;
+    top: 247px;
+    font-family: 'ADLaM Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 84px;
+    text-align: center;
+
+    color: #066699;
+
+
+}
+

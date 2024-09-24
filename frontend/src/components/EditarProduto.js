@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Menu from "./Menu";
 
 function EditarProduto() {
+
+
+
     const { id } = useParams(); // Obtenha o ID da URL
     const [produto, setProduto] = useState(null);
     const navigate = useNavigate(); // Hook para redirecionamento
@@ -36,6 +40,7 @@ function EditarProduto() {
 
     return (
         <div>
+            <Menu/>
             <h2>Editar Produto</h2>
             <form onSubmit={handleSubmit}>
                 <label>Nome:</label>

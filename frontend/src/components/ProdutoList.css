@@ -1,0 +1,228 @@
+.container {
+    display: flex; /* Usar flexbox para dividir o espaço */
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 100vh; /* Ocupa toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove padding padrão */
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    background: rgba(78, 215, 224, 0.4);
+    width: 20%; /* Define a largura do menu como 20% */
+    padding: 20px; /* Adiciona padding ao menu */
+    box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+.nucleo {
+    background-color: #333333;
+    width: 80%; /* Define a largura da nucleo como 80% */
+    padding: 30px; /* Adiciona padding */
+    box-sizing: border-box; /* Inclui o padding na largura total */
+
+    height: 100vh;
+}
+/*overflow-y: auto; /* Adiciona rolagem se o conteúdo exceder a altura */
+
+.nucleo h2 {
+    font-family: 'ADLaM Display';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #066699;
+}
+
+
+.listaprodutos {
+    display: flex;               /* Usar flexbox para alinhar as caixinhas */
+    flex-wrap: wrap;            /* Permite que as caixinhas se movam para a próxima linha quando não houver espaço */
+    gap: 10px;                  /* Espaçamento entre as caixinhas */
+    justify-content: flex-start; /* Alinha as caixinhas à esquerda */
+}
+
+.caixinha {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;              /* Adiciona padding */
+    width: calc(30% - 10px);   /* Define uma largura para as caixinhas, subtraindo o gap */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    box-sizing: border-box;     /* Inclui padding e border na largura total */
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Muda para coluna em telas menores */
+    }
+    .menu {
+        width: 100%; /* O menu ocupa toda a largura em telas menores */
+        padding: 10px; /* Ajusta o padding */
+    }
+    .nucleo {
+        width: 100%; /* A nucleo também ocupa toda a largura em telas menores */
+    }
+    .caixinha {
+        width: calc(100% - 10px); /* Ocupa 100% da largura em telas pequenas */
+    }
+}
+
+
+
+/*.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background: rgba(78, 215, 224, 0.4);
+}
+
+.botao {
+    position: relative;
+    width: 159px;
+    height: 54px;
+    background: #066699;
+    border-radius: 50px;
+}
+
+.nucleo {
+    background-color: #333333;
+    height: 3000px;
+    width: 1200px;
+    position: relative;
+
+    top: 30%;
+    bottom: 30px
+;
+
+}
+.nucleo .h2 {
+    font-family: 'ADLaM Display';
+    font-style: normal;
+    font-size: 24px;
+    text-align: center;
+    color: #066699;
+}
+
+.listaprodutos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.caixinha {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    left: 20px;
+    right: 20px;
+    height: 650px;
+
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}*/
+
+.caixinha h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.caixinha p {
+    margin: 5px 0;
+}
+
+.caixinha .acoes {
+    display: flex;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.caixinha button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 2px 4px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.caixinha button:hover {
+    background-color: #ff1a1a;
+}
+
+.caixinha a {
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    padding: 2px 4px;
+    border: 1px solid #4CAF50;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.caixinha a:hover {
+    background-color: #4CAF30;
+}
+
+
+
+/*<table border="1">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Código</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {produtos.map(produto => (
+                        <tr key={produto.id}>
+                            <td>{produto.id}</td>
+                            <td>{produto.nome}</td>
+                            <td>{produto.descricao}</td>
+                            <td>{produto.codigo}</td>
+                            <td>{produto.preco.toFixed(2)}</td>
+                            <td>{produto.quantidade}</td>
+                            <td>
+                                <Link to={`/produtos/editar/${produto.id}`}>Editar</Link>
+                                {' | '}
+                                <button onClick={() => handleDelete(produto.id)}>Excluir</button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>*/
+
+
+
+
+/*<div className="produtos-lista">
+                    {produtos.map(produto => (
+                        <div className="produto-card" key={produto.id}>
+                            <td>{produto.id}</td>
+                            <h3>{produto.nome}</h3>
+                            <p><strong>Descrição:</strong> {produto.descricao}</p>
+                            <p><strong>Código:</strong> {produto.codigo}</p>
+                            <p><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</p>
+                            <p><strong>Quantidade:</strong> {produto.quantidade}</p>
+                            <div className="acoes">
+                                <Link to={`/produtos/editar/${produto.id}`}>Editar</Link>
+                                <button onClick={() => handleDelete(produto.id)}>Excluir</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>*/
+
