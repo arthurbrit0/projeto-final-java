@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate, useParams } from 'react-router-dom';
+import Menu from "./Menu";
 
 const VendaForm = () => {
+
+
     const [venda, setVenda] = useState({
         vendedor: '',
         itens: [
@@ -14,7 +17,7 @@ const VendaForm = () => {
     const [mensagem, setMensagem] = useState('');
     const [errors, setErrors] = useState({});
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
@@ -100,6 +103,7 @@ const VendaForm = () => {
 
     return (
         <div>
+            <Menu/>
             <h2>{id ? 'Editar Venda' : 'Nova Venda'}</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -108,14 +112,14 @@ const VendaForm = () => {
                         type="text"
                         name="vendedor"
                         value={venda.vendedor}
-                        onChange={(e) => setVenda({ ...venda, vendedor: e.target.value })}
+                        onChange={(e) => setVenda({...venda, vendedor: e.target.value})}
                         required
                     />
                     {errors.vendedor && <span style={{color: 'red'}}>{errors.vendedor}</span>}
                 </div>
                 <h3>Itens</h3>
                 {venda.itens.map((item, index) => (
-                    <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
+                    <div key={index} style={{border: '1px solid #ccc', padding: '10px', marginBottom: '10px'}}>
                         <div>
                             <label>Produto:</label>
                             <select
@@ -131,7 +135,8 @@ const VendaForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            {errors[`itens[${index}].produtoCodigo`] && <span style={{color: 'red'}}>{errors[`itens[${index}].produtoCodigo`]}</span>}
+                            {errors[`itens[${index}].produtoCodigo`] &&
+                                <span style={{color: 'red'}}>{errors[`itens[${index}].produtoCodigo`]}</span>}
                         </div>
                         <div>
                             <label>Quantidade:</label>
@@ -144,7 +149,8 @@ const VendaForm = () => {
                                 min="1"
                                 step="1"
                             />
-                            {errors[`itens[${index}].quantidade`] && <span style={{color: 'red'}}>{errors[`itens[${index}].quantidade`]}</span>}
+                            {errors[`itens[${index}].quantidade`] &&
+                                <span style={{color: 'red'}}>{errors[`itens[${index}].quantidade`]}</span>}
                         </div>
                         <div>
                             <label>Preço Unitário:</label>

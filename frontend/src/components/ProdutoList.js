@@ -1,9 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import "./ProdutoList.css";
+import Menu from "./Menu";
 
 const ProdutoList = () => {
-    const [produtos, setProdutos] = useState([]);
+
+
+    const [produtos, setProdutos] = useState([
+        {
+            id:1,
+            nome:"ma",
+            descricao: "mnj",
+            codigo: 123456,
+            preco: 34,
+            quantidade: 34,
+
+        },
+        {
+            id:2,
+            nome:"martyu",
+            descricao: "mnfdsj",
+            codigo: 123457,
+            preco: 34,
+            quantidade: 34,
+        }
+    ]);
 
     useEffect(() => {
         fetchProdutos();
@@ -32,37 +54,26 @@ const ProdutoList = () => {
 
     return (
         <div>
-            <h2>Lista de Produtos</h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Código</th>
-                        <th>Preço</th>
-                        <th>Quantidade</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Menu/>
+            <div className='nucleo'>
+                <h2>Lista de Produtos</h2>
+                <div className="listaprodutos">
                     {produtos.map(produto => (
-                        <tr key={produto.id}>
-                            <td>{produto.id}</td>
-                            <td>{produto.nome}</td>
-                            <td>{produto.descricao}</td>
-                            <td>{produto.codigo}</td>
-                            <td>{produto.preco.toFixed(2)}</td>
-                            <td>{produto.quantidade}</td>
-                            <td>
+                        <div className="caixinha" key={produto.id}>
+                            <p>{produto.id}</p>
+                            <h3>{produto.nome}</h3>
+                            <p><strong>Descrição:</strong> {produto.descricao}</p>
+                            <p><strong>Código:</strong> {produto.codigo}</p>
+                            <p><strong>Preço:</strong> R$ {produto.preco.toFixed(2)}</p>
+                            <p><strong>Quantidade:</strong> {produto.quantidade}</p>
+                            <div className="acoes">
                                 <Link to={`/produtos/editar/${produto.id}`}>Editar</Link>
-                                {' | '}
                                 <button onClick={() => handleDelete(produto.id)}>Excluir</button>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                     ))}
-                </tbody>
-            </table>
+                </div>
+            </div>
         </div>
     );
 };

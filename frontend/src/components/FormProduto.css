@@ -1,28 +1,25 @@
-.fixo{
-    display: flex;
-    flex-direction: column;
-}
+.nucleo {
+    /* Seja bem-vinde à sua biblioteca online */
 
-.titulo {
-    padding: 30px;
-    position: relative;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    font-size: 50px;
-    background: #FFFFFF;
+    position: absolute;
+    width: 400px;
+    height: 50px;
+    left: 222px;
+    top: 107px;
     font-family: 'ADLaM Display';
     font-style: normal;
-    font-weight: 400;
-    font-size: 50px;
-    line-height: 90px;
+    font-weight: 200;
+    font-size: 24px;
+    line-height: 84px;
+    text-align: center;
 
     color: #066699;
 
 
 }
 
-/*.funcionalidades {
+
+.menu {
     display: flex;
     flex-direction: column;
     gap: 28px;
@@ -38,8 +35,4 @@
     height: 54px;
     background: #066699;
     border-radius: 50px;
-
-}*/
-botao.hover {
-    opacity: 1;
 }
