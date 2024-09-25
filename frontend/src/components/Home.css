@@ -1,13 +1,31 @@
+.containerhome {
+    display: flex; /* Usar flexbox para dividir o espaço */
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 100vh; /* Ocupa toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove padding padrão */
+}
+
 .mensagem {
     /* Seja bem-vinde à sua biblioteca online */
-    position: absolute;
-    height: 159px;
-    left: 222px;
-    top: 247px;
-    font-family: 'ADLaM Display';
+    position: relative;
+    left: 10%;
+    top: 10%;
+    font-family: "ADLaM Display", system-ui;
+    font-weight: 400;
     font-style: normal;
-    line-height: 84px;
+    line-height: 50px;
     text-align: center;
+    align-items: center;
+    color: #FFFFFF;
+}
 
+.mensagem h1{
+    font-size: 50px;
+}
+
+.mensagem p{
+    font-size: 15px;
+}
 
 

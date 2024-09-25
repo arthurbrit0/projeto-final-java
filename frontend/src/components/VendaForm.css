@@ -1,0 +1,115 @@
+.containervendas {
+    display: flex; /* Usar flexbox para dividir o espaço */
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 100vh; /* Ocupa toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove padding padrão */
+}
+
+/* Estilos gerais */
+.containervendas body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Estilo do título principal */
+.containervendas h2 {
+    text-align: center;
+    color: #066699;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Estilo do subtítulo dos itens */
+.containervendas h3 {
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Estilos para o formulário */
+.form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.form div {
+    margin-bottom: 15px;
+}
+
+/* Estilo para os rótulos */
+.label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Estilo para os campos de entrada */
+input[type="text"],
+input[type="number"],
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+/* Estilo para mensagens de erro */
+span {
+    color: red;
+    font-size: 14px;
+}
+
+/* Estilo para os itens */
+form > div > div {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/*
+.containervendas button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #066699;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.containervendas button[type="button"] {
+    background-color: #f44336;
+}
+
+.containervendas button:hover {
+    background-color: #054a7a;
+}
+
+.containervendas button[type="button"]:hover {
+    background-color: #c0392b;
+}
+
+
+.containervendas p {
+    text-align: center;
+    color: #066699;
+    font-size: 16px;
+}
+*/

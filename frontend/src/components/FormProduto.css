@@ -1,38 +1,87 @@
-.nucleo {
-    /* Seja bem-vinde à sua biblioteca online */
+.containernovoproduto{
+    display: flex; /* Usar flexbox para dividir o espaço */
+    width: 100%; /* Ocupa toda a largura da tela */
+    height: 100vh; /* Ocupa toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    padding: 0; /* Remove padding padrão */
+}
+/* Estilos para a caixa do formulário */
+.caixa {
 
-    position: absolute;
-    width: 400px;
-    height: 50px;
-    left: 222px;
-    top: 107px;
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 520px;
+    position: relative;
+    right: 1%;
+    top: 5%;
+
+
+}
+
+/* Título do formulário */
+.caixa h2 {
     font-family: 'ADLaM Display';
     font-style: normal;
-    font-weight: 200;
-    font-size: 24px;
-    line-height: 84px;
+    font-size: 40px;
+    color: #f9f9f9;
     text-align: center;
-
-    color: #066699;
-
-
+    margin-bottom: 20px;
 }
 
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    background: rgba(78, 215, 224, 0.4);
+/* Estilos gerais para os campos do formulário */
+.caixa form div {
+    margin-bottom: 15px;
 }
 
-.botao {
-    position: relative;
-    width: 159px;
-    height: 54px;
-    background: #066699;
-    border-radius: 50px;
+.caixa label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #f9f9f9;
 }
+
+.caixa input[type="text"],
+.caixa input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Estilos para as mensagens de erro */
+.caixa span {
+    color: red;
+    font-size: 14px;
+}
+
+/* Estilos para o botão de submissão */
+.caixa button {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #066699;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Estilo do botão ao passar o mouse */
+.caixa button:hover {
+    background-color: #054a7a;
+}
+
+/* Mensagem de feedback após o envio */
+.alerta {
+    text-align: center;
+    font-size: 16px;
+    color: red;
+    margin-top: 20px;
+}
+

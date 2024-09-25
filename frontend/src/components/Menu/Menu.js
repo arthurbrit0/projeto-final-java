@@ -1,5 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
+import './Menu.css'
 
 const Menu = () => {
     const navigate = useNavigate();    //importação da função de mudança de página
@@ -10,7 +11,7 @@ const Menu = () => {
     const novavenda = () => { navigate('/vendas/nova'); }
     return(
         <div className='menu'>
-            <button className='botao' onClick={home}>Lar</button>
+            <button className='botao' onClick={home}>Home</button>
             <button className='botao' onClick={listaprodutos}>Produtos</button>
             <button className='botao' onClick={novoproduto}>Novo Produto</button>
             <button className='botao' onClick={listavendas}>Vendas</button>

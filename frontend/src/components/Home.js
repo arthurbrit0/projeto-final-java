@@ -1,11 +1,11 @@
 import React from 'react';
-import './Home.css'
+import './Home.css';
 import {useNavigate} from "react-router-dom";
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
 
 const Home = () => {
     return (
-        <div className=''>
+        <div className='containerhome'>
             <Menu/>
             <div className='mensagem'>
             <h1>Bem-vindo à Biblioteca Online</h1>

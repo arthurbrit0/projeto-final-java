@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
 
 function EditarProduto() {
 

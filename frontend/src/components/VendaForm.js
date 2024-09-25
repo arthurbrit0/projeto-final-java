@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {useNavigate, useParams } from 'react-router-dom';
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
+import './VendaForm.css';
 
 const VendaForm = () => {
 
@@ -17,7 +18,7 @@ const VendaForm = () => {
     const [mensagem, setMensagem] = useState('');
     const [errors, setErrors] = useState({});
 
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() => {
@@ -102,11 +103,12 @@ const VendaForm = () => {
     };
 
     return (
-        <div>
+        <div className='containervendas'>
             <Menu/>
-            <h2>{id ? 'Editar Venda' : 'Nova Venda'}</h2>
+            {/* <h2>{id ? 'Editar Venda' : 'Nova Venda'}</h2> */}
             <form onSubmit={handleSubmit}>
                 <div>
+                    <h2>{id ? 'Editar Venda' : 'Nova Venda'}</h2>
                     <label>Vendedor:</label>
                     <input
                         type="text"

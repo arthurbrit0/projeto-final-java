@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './FormProduto.css'
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
 
 const FormProduto = () => {
     const [produto, setProduto] = useState({
@@ -70,9 +70,9 @@ const FormProduto = () => {
     };
 
     return (
-        <div>
+        <div className= 'containernovoproduto'>
             <Menu/>
-            <div className='nucleo'>
+            <div className='caixa'>
                 <h2>{id ? 'Editar Produto' : 'Novo Produto'}</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
@@ -136,7 +136,7 @@ const FormProduto = () => {
                     <button type="submit">Salvar Produto</button>
                 </form>
             </div>
-            {mensagem && <p>{mensagem}</p>}
+            {mensagem && <p className='alerta'>{mensagem}</p>}
         </div>
     );
 };
