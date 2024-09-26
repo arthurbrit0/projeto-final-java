@@ -121,7 +121,7 @@ const VendaForm = () => {
                     </div>
                     <h3>Itens</h3>
                     {venda.itens.map((item, index) => (
-                        <div key={index} style={{border: '1px solid #ccc', padding: '10px', marginBottom: '10px'}}>
+                        <div className= 'itensnovavenda' key={index} style={{border: '1px solid #ccc', padding: '10px', marginBottom: '10px'}}>
                             <div>
                                 <label>Produto:</label>
                                 <select
@@ -167,8 +167,10 @@ const VendaForm = () => {
                             <button className='remover' type="button" onClick={() => removeItem(index)}>Remover Item</button>
                         </div>
                     ))}
-                    <button className='adicionar' type="button" onClick={addItem}>Adicionar Item</button>
-                    <button className='salvar' type="submit">Salvar Venda</button>
+                    <div className= 'botoesitens'>
+                        <button className='adicionar' type="button" onClick={addItem}>Adicionar Item</button>
+                        <button className='salvar' type="submit">Salvar Venda</button>
+                    </div>
                 </form>
             </div>
             {mensagem && <p>{mensagem}</p>}

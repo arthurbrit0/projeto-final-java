@@ -3,6 +3,7 @@
 .fixo{
     display: flex;
     flex-direction: column;
+
 }
 
 .titulo {
@@ -17,7 +18,7 @@
     font-weight: 400;
     font-style: normal;
     font-size: 50px;
-    line-height: 90px;
+    line-height: 55px;
 
     color: #066699;
 

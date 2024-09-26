@@ -4,13 +4,14 @@
     height: 100vh; /* Ocupa toda a altura da tela */
     margin: 0; /* Remove margens padrão */
     padding: 0; /* Remove padding padrão */
+
 }
 
 .mensagem {
     /* Seja bem-vinde à sua biblioteca online */
     position: relative;
-    left: 10%;
-    top: 10%;
+    left: 270px;
+    top: 80px;
     font-family: "ADLaM Display", system-ui;
     font-weight: 400;
     font-style: normal;

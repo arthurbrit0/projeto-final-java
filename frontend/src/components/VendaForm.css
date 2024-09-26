@@ -29,7 +29,7 @@
 .formulario {
     display: flex;
     flex-direction: column;
-    max-height: 90vh;
+    height: 595px;
     overflow-y: auto;
 
     border: 1px solid #ccc;
@@ -75,11 +75,18 @@ span {
     font-size: 14px;
 }
 
+.itensnovavenda {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-
+.itensnovavenda div {
+    width: 100%;
+}
 
 .remover {
-    width: 100%;
+
     padding: 8px 10px;
     background-color: red;
     color: #fff;
@@ -89,8 +96,16 @@ span {
     font-size: 16px;
 }
 
+.botoesitens{
+    display: flex;
+    flex-direction: row; /* Coloca os botões em coluna */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center;     /* Centraliza horizontalmente */
+    gap: 10px;
+}
+
 .adicionar{
-    width: 100%;
+
     padding: 8px 10px;
     background-color: green;
     color: #fff;
@@ -98,12 +113,12 @@ span {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-bottom: 10px;
+
 }
 
 .salvar{
-    width: 100%;
-    padding: 10px 15px;
+
+    padding: 8px 10px;
     background-color: #066699;
     color: #fff;
     border: none;

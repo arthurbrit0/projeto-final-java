@@ -81,7 +81,7 @@ const VendaList = () => {
                             onChange={(e) => setDataVenda(e.target.value)}
                         />
                     </div>
-                    <div className='botoes'>
+                    <div className='botoeslistavenda'>
                         <button className='buscar' type="submit">Buscar</button>
                         <button className='limpar' type="button" onClick={handleClear}>Limpar</button>
                     </div>
@@ -89,30 +89,32 @@ const VendaList = () => {
 
                 <div className="listavendas">
                     <h2>Lista de Vendas</h2>
-                    {vendas.map((venda) => (
-                        <div key={venda.id} className="venda">
-                            <div className="vendaid">
-                                <h3>Venda #{venda.id}</h3>
-                                <span className="vendadata">{new Date(venda.data).toLocaleString()}</span>
+                    <div className= 'lista'>
+                        {vendas.map((venda) => (
+                            <div key={venda.id} className="venda">
+                                <div className="vendaid">
+                                    <h3>Venda #{venda.id}</h3>
+                                    <span className="vendadata">{new Date(venda.data).toLocaleString()}</span>
+                                </div>
+                                <div className="cartao">
+                                    <p><strong>Vendedor:</strong> {venda.vendedor}</p>
+                                    <p><strong>Produtos Comprados:</strong></p>
+                                    <ul>
+                                        {venda.itens.map((item) => (
+                                            <li key={item.id}>
+                                                {item.produtoNome} - Quantidade: {item.quantidade} - Valor Total:
+                                                R${(item.quantidade * item.precoUnitario).toFixed(2)}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="borda">
+                                    <p><strong>Valor Total:</strong> R${venda.valorTotal.toFixed(2)}</p>
+                                    <button className="excluir" onClick={() => handleDelete(venda.id)}>Excluir</button>
+                                </div>
                             </div>
-                            <div className="cartao">
-                                <p><strong>Vendedor:</strong> {venda.vendedor}</p>
-                                <p><strong>Produtos Comprados:</strong></p>
-                                <ul>
-                                    {venda.itens.map((item) => (
-                                        <li key={item.id}>
-                                            {item.produtoNome} - Quantidade: {item.quantidade} - Valor Total:
-                                            R${(item.quantidade * item.precoUnitario).toFixed(2)}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                            <div className="borda">
-                                <p><strong>Valor Total:</strong> R${venda.valorTotal.toFixed(2)}</p>
-                                <button className="excluir" onClick={() => handleDelete(venda.id)}>Excluir</button>
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
 
             </div>
