@@ -5,11 +5,9 @@ import com.mercado.sistema_vendas.models.Produto;
 import com.mercado.sistema_vendas.models.Venda;
 import com.mercado.sistema_vendas.repository.VendaRepository;
 import com.mercado.sistema_vendas.services.ProdutoService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,7 +40,6 @@ public class VendaService {
             item.setProduto(produto);
             item.setPrecoUnitario(produto.getPreco());
         }
-
         venda.setData(LocalDateTime.now());
         venda.setValorTotal(calcularValorTotal(venda.getItens()));
         return vendaRepository.save(venda);
@@ -74,7 +71,6 @@ public class VendaService {
                 }
             }
         }
-
         return venda;
     }
 

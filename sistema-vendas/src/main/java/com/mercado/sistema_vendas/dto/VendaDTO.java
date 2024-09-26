@@ -10,11 +10,8 @@ public class VendaDTO {
     private List<ItemVendaDTO> itens;
     private Double valorTotal;
 
-    // Construtor padrão
     public VendaDTO() {
     }
-
-    // Getters e Setters
 
     public Long getId() {
         return id;

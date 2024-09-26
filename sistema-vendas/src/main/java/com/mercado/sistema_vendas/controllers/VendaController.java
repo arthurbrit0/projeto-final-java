@@ -5,19 +5,17 @@ import com.mercado.sistema_vendas.models.ItemVenda;
 import com.mercado.sistema_vendas.dto.VendaDTO;
 import com.mercado.sistema_vendas.dto.ItemVendaDTO;
 import com.mercado.sistema_vendas.services.VendaService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:3000") // Permite requisições do frontend
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/vendas")
 public class VendaController {
@@ -25,7 +23,6 @@ public class VendaController {
     @Autowired
     private VendaService vendaService;
 
-    // Salvar nova venda
     @PostMapping("/salvar")
     public ResponseEntity<?> salvarVenda(@Valid @RequestBody VendaDTO vendaDTO) {
         try {
@@ -43,7 +40,6 @@ public class VendaController {
         }
     }
 
-    // Listar todas as vendas ou buscar por vendedor ou data
     @GetMapping("/listar")
     public ResponseEntity<?> listarVendas(
             @RequestParam(value = "vendedor", required = false) String vendedor,
@@ -72,7 +68,6 @@ public class VendaController {
         }
     }
 
-    // Excluir venda pelo ID
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<?> excluirVenda(@PathVariable Long id) {
         try {
@@ -84,8 +79,6 @@ public class VendaController {
                     .body("Ocorreu um erro ao excluir a venda: " + e.getMessage());
         }
     }
-
-    // Métodos auxiliares para conversão entre entidades e DTOs
 
     private Venda convertToEntity(VendaDTO vendaDTO) {
         Venda venda = new Venda();
@@ -99,7 +92,6 @@ public class VendaController {
         }).collect(Collectors.toList());
 
         venda.setItens(itens);
-
         return venda;
     }
 
@@ -109,7 +101,6 @@ public class VendaController {
         vendaDTO.setData(venda.getData());
         vendaDTO.setVendedor(venda.getVendedor());
         vendaDTO.setValorTotal(venda.getValorTotal());
-
         List<ItemVendaDTO> itensDTO = venda.getItens().stream()
                 .map(item -> {
                     ItemVendaDTO itemDTO = new ItemVendaDTO();
@@ -125,5 +116,6 @@ public class VendaController {
         vendaDTO.setItens(itensDTO);
 
         return vendaDTO;
+
     }
 }

@@ -11,8 +11,6 @@ public class ProdutoDTO {
     public ProdutoDTO() {
     }
 
-    // Getters e Setters
-
     public Long getId() {
         return id;
     }

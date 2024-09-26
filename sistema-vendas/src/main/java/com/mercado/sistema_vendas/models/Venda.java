@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ public class Venda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime data;
 
     @NotBlank(message = "Vendedor é obrigatório")
@@ -25,13 +23,10 @@ public class Venda {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "venda_id")
     private List<ItemVenda> itens = new ArrayList<>();
-
     private Double valorTotal;
 
     public Venda() {
     }
-
-    // Getters e Setters
 
     public Long getId() {
         return id;

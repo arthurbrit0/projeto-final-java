@@ -3,16 +3,13 @@ package com.mercado.sistema_vendas.services;
 import com.mercado.sistema_vendas.models.Produto;
 import com.mercado.sistema_vendas.repository.ProdutoRepository;
 import com.mercado.sistema_vendas.repository.ItemVendaRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Service
 public class ProdutoService {
-
     @Autowired
     private ProdutoRepository produtoRepository;
 
@@ -44,7 +41,6 @@ public class ProdutoService {
         if (!itemVendaRepository.findByProduto(produto).isEmpty()) {
             throw new Exception("Esse produto está ligado a uma venda e não pode ser deletado.");
         }
-
         produtoRepository.deleteById(id);
     }
 

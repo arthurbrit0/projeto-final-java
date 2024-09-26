@@ -7,11 +7,8 @@ public class ItemVendaDTO {
     private Integer quantidade;
     private Double precoUnitario;
 
-    // Construtor padrão
     public ItemVendaDTO() {
     }
-
-    // Getters e Setters
 
     public Long getId() {
         return id;

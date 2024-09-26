@@ -29,8 +29,6 @@ public class ItemVenda {
     public ItemVenda() {
     }
 
-    // Getters e Setters
-
     public Long getId() {
         return id;
     }

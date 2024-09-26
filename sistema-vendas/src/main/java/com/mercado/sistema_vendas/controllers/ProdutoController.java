@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000") // Permite requisições do frontend
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/produtos")
 public class ProdutoController {
@@ -17,7 +16,6 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    // Criar novo produto
     @PostMapping("/salvar")
     public ResponseEntity<?> salvarProduto(@RequestBody Produto produto) {
         try {
@@ -30,7 +28,6 @@ public class ProdutoController {
         }
     }
 
-    // Atualizar produto existente
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<?> atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
         try {
@@ -54,14 +51,15 @@ public class ProdutoController {
         }
     }
 
-    // Buscar produto por ID
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarProdutoPorId(@PathVariable Long id) {
         try {
             Produto produto = produtoService.buscarPorId(id);
             if (produto == null) {
+
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não encontrado com ID: " + id);
             }
+
             return ResponseEntity.ok(produto);
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,9 +68,9 @@ public class ProdutoController {
         }
     }
 
-    // Listar todos os produtos
     @GetMapping("/listar")
     public ResponseEntity<?> listarProdutos() {
+
         try {
             List<Produto> produtos = produtoService.listarTodos();
             return ResponseEntity.ok(produtos);
@@ -81,11 +79,12 @@ public class ProdutoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Ocorreu um erro ao listar os produtos: " + e.getMessage());
         }
+
     }
 
-    // Excluir produto por ID
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<?> excluirProduto(@PathVariable Long id) {
+
         try {
             produtoService.excluirPorId(id);
             return ResponseEntity.ok("Produto excluído com sucesso.");
@@ -94,5 +93,6 @@ public class ProdutoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Ocorreu um erro ao excluir o produto: " + e.getMessage());
         }
+
     }
 }
