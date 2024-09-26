@@ -1,34 +1,17 @@
-package com.mercado.sistema_vendas.models;
-
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package com.mercado.sistema_vendas.dto;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@Entity
-public class Venda {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class VendaDTO {
     private Long id;
-
     private LocalDateTime data;
-
-    @NotBlank(message = "Vendedor é obrigatório")
     private String vendedor;
-
-    @Valid
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "venda_id")
-    private List<ItemVenda> itens = new ArrayList<>();
-
+    private List<ItemVendaDTO> itens;
     private Double valorTotal;
 
-    public Venda() {
+    // Construtor padrão
+    public VendaDTO() {
     }
 
     // Getters e Setters
@@ -45,7 +28,7 @@ public class Venda {
         return vendedor;
     }
 
-    public List<ItemVenda> getItens() {
+    public List<ItemVendaDTO> getItens() {
         return itens;
     }
 
@@ -65,7 +48,7 @@ public class Venda {
         this.vendedor = vendedor;
     }
 
-    public void setItens(List<ItemVenda> itens) {
+    public void setItens(List<ItemVendaDTO> itens) {
         this.itens = itens;
     }
 

@@ -4,16 +4,20 @@ import com.mercado.sistema_vendas.models.ItemVenda;
 import com.mercado.sistema_vendas.models.Produto;
 import com.mercado.sistema_vendas.models.Venda;
 import com.mercado.sistema_vendas.repository.VendaRepository;
+import com.mercado.sistema_vendas.services.ProdutoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.time.LocalDate;
-import java.util.List;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class VendaService {
+
     @Autowired
     private VendaRepository vendaRepository;
 
@@ -23,7 +27,6 @@ public class VendaService {
     @Transactional
     public Venda salvar(Venda venda) throws Exception {
         for (ItemVenda item : venda.getItens()) {
-            // Buscar o Produto pelo código vindo do frontend
             Produto produto = produtoService.buscarPorCodigo(item.getProdutoCodigo());
 
             if (produto == null) {
@@ -45,38 +48,29 @@ public class VendaService {
         return vendaRepository.save(venda);
     }
 
-
-
-
-    private ItemVenda buscarItemExistente(Venda vendaExistente, String produtoCodigo) {
-        return vendaExistente.getItens().stream()
-                .filter(item -> item.getProdutoCodigo().equals(produtoCodigo))
-                .findFirst()
-                .orElse(new ItemVenda());
-    }
-
-
     private Double calcularValorTotal(List<ItemVenda> itens) {
         return itens.stream()
                 .mapToDouble(item -> item.getPrecoUnitario() * item.getQuantidade()).sum();
     }
 
+    @Transactional(readOnly = true)
     public List<Venda> listarTodas() {
         return vendaRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public List<Venda> buscarPorVendedor(String vendedor) {
         return vendaRepository.findByVendedorContainingIgnoreCase(vendedor);
     }
 
+    @Transactional(readOnly = true)
     public Venda buscarPorId(Long id) {
         Venda venda = vendaRepository.findById(id).orElse(null);
 
         if (venda != null) {
-            // Preenche o produtoCodigo manualmente para cada ItemVenda
             for (ItemVenda item : venda.getItens()) {
                 if (item.getProduto() != null) {
-                    item.setProdutoCodigo(item.getProduto().getCodigo()); // Preenche o código do produto
+                    item.setProdutoCodigo(item.getProduto().getCodigo());
                 }
             }
         }
@@ -84,23 +78,20 @@ public class VendaService {
         return venda;
     }
 
-
-    public void excluirPorId(Long id) {
+    @Transactional
+    public void excluirPorId(Long id) throws Exception {
         Venda venda = vendaRepository.findById(id).orElse(null);
         if (venda == null) {
-            throw new RuntimeException("Venda não encontrada com ID: " + id);
+            throw new Exception("Venda não encontrada com ID: " + id);
         }
         vendaRepository.deleteById(id);
     }
 
-
-
+    @Transactional(readOnly = true)
     public List<Venda> buscarPorData(LocalDate dataVenda) {
-        LocalDateTime startOfDay = dataVenda.atStartOfDay(); // Início do dia
-        LocalDateTime endOfDay = dataVenda.atTime(LocalTime.MAX); // Fim do dia (23:59:59)
+        LocalDateTime startOfDay = dataVenda.atStartOfDay();
+        LocalDateTime endOfDay = dataVenda.atTime(LocalTime.MAX);
 
         return vendaRepository.findByDataBetween(startOfDay, endOfDay);
     }
-
-
 }

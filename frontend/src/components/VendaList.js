@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {useNavigate} from "react-router-dom";
 import Menu from "./Menu/Menu";
 import './VendaList.css';
 
 const VendaList = () => {
 
     const [vendas, setVendas] = useState([]);
-    const [vendedor, setVendedor] = useState(''); // Estado para nome do vendedor
-    const [dataVenda, setDataVenda] = useState(''); // Estado para data da venda
+    const [vendedor, setVendedor] = useState('');
+    const [dataVenda, setDataVenda] = useState('');
 
     useEffect(() => {
         fetchVendas();
@@ -16,17 +15,36 @@ const VendaList = () => {
 
     const fetchVendas = async () => {
         try {
-            const response = await axios.get('/api/vendas/listar');
+            let url = 'http://localhost:8080/api/vendas/listar';
+            const params = [];
+
+            if (vendedor) {
+                params.push(`vendedor=${encodeURIComponent(vendedor)}`);
+            }
+            if (dataVenda) {
+                params.push(`data=${dataVenda}`);
+            }
+            if (params.length > 0) {
+                url += `?${params.join('&')}`;
+            }
+
+            const response = await axios.get(url);
+            console.log('Dados recebidos:', response.data);
             setVendas(response.data);
         } catch (error) {
             console.error('Erro ao buscar vendas:', error);
         }
     };
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        fetchVendas();
+    };
+
     const handleDelete = async (id) => {
         if (window.confirm('Tem certeza que deseja excluir esta venda?')) {
             try {
-                await axios.delete(`/api/vendas/excluir/${id}`);
+                await axios.delete(`http://localhost:8080/api/vendas/excluir/${id}`);
                 setVendas(vendas.filter(venda => venda.id !== id));
             } catch (error) {
                 console.error('Erro ao excluir venda:', error);
@@ -35,47 +53,30 @@ const VendaList = () => {
         }
     };
 
-    const handleSearch = async (e) => {
-        e.preventDefault();
-        try {
-            const params = {};
-
-            if (vendedor) params.vendedor = vendedor;
-            if (dataVenda) params.data = dataVenda;
-
-            const response = await axios.get('/api/vendas/listar', { params });
-            setVendas(response.data);
-        } catch (error) {
-            console.error('Erro ao buscar vendas:', error);
-        }
-    };
-
-    // Função para limpar os campos de pesquisa
-    const handleClear = () => {
-        setVendedor('');  // Limpa o campo vendedor
-        setDataVenda('');  // Limpa o campo data
-        fetchVendas();     // Recarrega todas as vendas
-    };
-
     return (
-        <div className= 'containerlistavendas'>
+        <div className='containerlistavendas'>
             <Menu/>
             <h2>Lista de Vendas</h2>
+            {/* Formulário de busca */}
             <form onSubmit={handleSearch}>
-                <input
-                    type="text"
-                    placeholder="Buscar por vendedor"
-                    value={vendedor}
-                    onChange={(e) => setVendedor(e.target.value)} // Atualiza o estado do vendedor
-                />
-                <input
-                    type="date"
-                    value={dataVenda}
-                    onChange={(e) => setDataVenda(e.target.value)} // Atualiza o estado da data
-                />
+                <div>
+                    <label>Vendedor:</label>
+                    <input
+                        type="text"
+                        value={vendedor}
+                        onChange={(e) => setVendedor(e.target.value)}
+                        placeholder="Nome do vendedor"
+                    />
+                </div>
+                <div>
+                    <label>Data da Venda:</label>
+                    <input
+                        type="date"
+                        value={dataVenda}
+                        onChange={(e) => setDataVenda(e.target.value)}
+                    />
+                </div>
                 <button type="submit">Buscar</button>
-                <button type="button" onClick={handleClear}>Limpar</button>
-                {/* Botão para limpar */}
             </form>
             <table border="1">
                 <thead>
@@ -98,13 +99,13 @@ const VendaList = () => {
                             <ul>
                                 {venda.itens.map(item => (
                                     <li key={item.id}>
-                                        {item.produto.nome} - Quantidade: {item.quantidade} - Valor Total:
+                                        {item.produtoNome} - Quantidade: {item.quantidade} - Valor Total:
                                         R${(item.quantidade * item.precoUnitario).toFixed(2)}
                                     </li>
                                 ))}
                             </ul>
                         </td>
-                        <td>{venda.valorTotal.toFixed(2)}</td>
+                        <td>R${venda.valorTotal.toFixed(2)}</td>
                         <td>
                             <button onClick={() => handleDelete(venda.id)}>Excluir</button>
                         </td>

@@ -1,17 +1,23 @@
 package com.mercado.sistema_vendas.controllers;
 
 import com.mercado.sistema_vendas.models.Venda;
+import com.mercado.sistema_vendas.models.ItemVenda;
+import com.mercado.sistema_vendas.dto.VendaDTO;
+import com.mercado.sistema_vendas.dto.ItemVendaDTO;
 import com.mercado.sistema_vendas.services.VendaService;
-import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;  // Import para DateTimeFormat
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;  // Import para LocalDate
+import jakarta.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:3000") // Permite requisições do frontend
 @RestController
 @RequestMapping("/api/vendas")
 public class VendaController {
@@ -19,9 +25,27 @@ public class VendaController {
     @Autowired
     private VendaService vendaService;
 
+    // Salvar nova venda
+    @PostMapping("/salvar")
+    public ResponseEntity<?> salvarVenda(@Valid @RequestBody VendaDTO vendaDTO) {
+        try {
+            Venda venda = convertToEntity(vendaDTO);
+
+            Venda vendaSalva = vendaService.salvar(venda);
+
+            VendaDTO vendaSalvaDTO = convertToDTO(vendaSalva);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(vendaSalvaDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocorreu um erro: " + e.getMessage());
+        }
+    }
+
     // Listar todas as vendas ou buscar por vendedor ou data
     @GetMapping("/listar")
-    public ResponseEntity<List<Venda>> listarVendas(
+    public ResponseEntity<?> listarVendas(
             @RequestParam(value = "vendedor", required = false) String vendedor,
             @RequestParam(value = "data", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataVenda) {
 
@@ -36,38 +60,70 @@ public class VendaController {
                 vendas = vendaService.listarTodas();
             }
 
-            return ResponseEntity.ok(vendas);
+            List<VendaDTO> vendasDTO = vendas.stream()
+                    .map(this::convertToDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(vendasDTO);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocorreu um erro: " + e.getMessage());
         }
     }
 
-
-
-    // Salvar nova venda
-    @PostMapping("/salvar")
-    public ResponseEntity<Venda> salvarVenda(@Valid @RequestBody Venda venda) throws Exception {
-        Venda vendaSalva = vendaService.salvar(venda);
-        return ResponseEntity.status(HttpStatus.CREATED).body(vendaSalva);
-    }
-
-
-
-    // Excluir venda
+    // Excluir venda pelo ID
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<String> excluirVenda(@PathVariable Long id) {
-        vendaService.excluirPorId(id);
-        return ResponseEntity.ok("Venda excluída com sucesso.");
+    public ResponseEntity<?> excluirVenda(@PathVariable Long id) {
+        try {
+            vendaService.excluirPorId(id);
+            return ResponseEntity.ok("Venda excluída com sucesso.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ocorreu um erro ao excluir a venda: " + e.getMessage());
+        }
     }
 
-    // Buscar venda por ID
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<Venda> buscarVendaPorId(@PathVariable Long id) {
-        Venda venda = vendaService.buscarPorId(id);
-        if (venda == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-        return ResponseEntity.ok(venda);
+    // Métodos auxiliares para conversão entre entidades e DTOs
+
+    private Venda convertToEntity(VendaDTO vendaDTO) {
+        Venda venda = new Venda();
+        venda.setVendedor(vendaDTO.getVendedor());
+
+        List<ItemVenda> itens = vendaDTO.getItens().stream().map(itemDTO -> {
+            ItemVenda item = new ItemVenda();
+            item.setQuantidade(itemDTO.getQuantidade());
+            item.setProdutoCodigo(itemDTO.getProdutoCodigo());
+            return item;
+        }).collect(Collectors.toList());
+
+        venda.setItens(itens);
+
+        return venda;
+    }
+
+    private VendaDTO convertToDTO(Venda venda) {
+        VendaDTO vendaDTO = new VendaDTO();
+        vendaDTO.setId(venda.getId());
+        vendaDTO.setData(venda.getData());
+        vendaDTO.setVendedor(venda.getVendedor());
+        vendaDTO.setValorTotal(venda.getValorTotal());
+
+        List<ItemVendaDTO> itensDTO = venda.getItens().stream()
+                .map(item -> {
+                    ItemVendaDTO itemDTO = new ItemVendaDTO();
+                    itemDTO.setId(item.getId());
+                    itemDTO.setProdutoCodigo(item.getProduto().getCodigo());
+                    itemDTO.setProdutoNome(item.getProduto().getNome());
+                    itemDTO.setQuantidade(item.getQuantidade());
+                    itemDTO.setPrecoUnitario(item.getPrecoUnitario());
+                    return itemDTO;
+                })
+                .collect(Collectors.toList());
+
+        vendaDTO.setItens(itensDTO);
+
+        return vendaDTO;
     }
 }

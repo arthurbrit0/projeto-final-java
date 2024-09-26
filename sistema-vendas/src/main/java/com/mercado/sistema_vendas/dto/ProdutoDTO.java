@@ -1,33 +1,14 @@
-package com.mercado.sistema_vendas.models;
+package com.mercado.sistema_vendas.dto;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
-
-@Entity
-public class Produto {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProdutoDTO {
     private Long id;
-
-    @NotBlank(message = "Código do produto é obrigatório")
-    @Column(unique = true)
     private String codigo;
-
-    @NotBlank(message = "Nome do produto é obrigatório")
     private String nome;
-
-    @NotBlank(message = "Descrição do produto é obrigatória")
     private String descricao;
-
-    @PositiveOrZero(message = "Preço deve ser zero ou positivo")
     private Double preco;
-
-    @PositiveOrZero(message = "Quantidade deve ser zero ou positivo")
     private Integer quantidade;
 
-    public Produto() {
+    public ProdutoDTO() {
     }
 
     // Getters e Setters

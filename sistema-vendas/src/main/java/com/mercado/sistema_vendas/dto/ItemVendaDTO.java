@@ -1,32 +1,14 @@
-package com.mercado.sistema_vendas.models;
+package com.mercado.sistema_vendas.dto;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-@Entity
-public class ItemVenda {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ItemVendaDTO {
     private Long id;
-
-    @Transient
     private String produtoCodigo;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "produto_id", nullable = false)
-    private Produto produto;
-
-    @NotNull(message = "Quantidade é obrigatória")
-    @Positive(message = "Quantidade deve ser positiva")
+    private String produtoNome;
     private Integer quantidade;
-
-    @Column(name = "preco_unitario")
     private Double precoUnitario;
 
-    public ItemVenda() {
+    // Construtor padrão
+    public ItemVendaDTO() {
     }
 
     // Getters e Setters
@@ -39,8 +21,8 @@ public class ItemVenda {
         return produtoCodigo;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public String getProdutoNome() {
+        return produtoNome;
     }
 
     public Integer getQuantidade() {
@@ -59,8 +41,8 @@ public class ItemVenda {
         this.produtoCodigo = produtoCodigo;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setProdutoNome(String produtoNome) {
+        this.produtoNome = produtoNome;
     }
 
     public void setQuantidade(Integer quantidade) {

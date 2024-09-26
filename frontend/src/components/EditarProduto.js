@@ -3,36 +3,49 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Menu from "./Menu/Menu";
 
 function EditarProduto() {
-
-
-
     const { id } = useParams(); // Obtenha o ID da URL
     const [produto, setProduto] = useState(null);
     const navigate = useNavigate(); // Hook para redirecionamento
 
     useEffect(() => {
         // Carregar os dados do produto para edição
-        fetch(`/api/produtos/buscar/${id}`)
-            .then((response) => response.json())
-            .then((data) => setProduto(data));
+        fetch(`http://localhost:8080/api/produtos/buscar/${id}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Erro ao carregar o produto. Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => setProduto(data))
+            .catch((error) => {
+                console.error('Erro ao carregar o produto:', error);
+                // Você pode exibir uma mensagem de erro ao usuário aqui
+            });
     }, [id]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Chame a API para atualizar o produto
-        fetch(`/api/produtos/atualizar/${id}`, {
+        fetch(`http://localhost:8080/api/produtos/atualizar/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(produto),
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erro ao atualizar o produto. Status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                // Tratar o resultado da atualização e redirecionar
                 console.log("Produto atualizado:", data);
-                // Redirecionar para a lista de produtos
                 navigate("/produtos");
+            })
+            .catch((error) => {
+                console.error('Erro ao atualizar o produto:', error);
+                // Trate o erro aqui, exiba uma mensagem ao usuário, etc.
             });
     };
 
@@ -40,36 +53,43 @@ function EditarProduto() {
 
     return (
         <div>
-            <Menu/>
+            <Menu />
             <h2>Editar Produto</h2>
             <form onSubmit={handleSubmit}>
+                <label>Código:</label>
+                <input
+                    type="text"
+                    value={produto.codigo}
+                    onChange={(e) => setProduto({ ...produto, codigo: e.target.value })}
+                />
+
                 <label>Nome:</label>
                 <input
                     type="text"
                     value={produto.nome}
-                    onChange={(e) => setProduto({...produto, nome: e.target.value})}
+                    onChange={(e) => setProduto({ ...produto, nome: e.target.value })}
                 />
 
                 <label>Descrição:</label>
                 <input
                     type="text"
                     value={produto.descricao}
-                    onChange={(e) => setProduto({...produto, descricao: e.target.value})}
+                    onChange={(e) => setProduto({ ...produto, descricao: e.target.value })}
                 />
 
                 <label>Preço:</label>
                 <input
                     type="number"
+                    step="0.01"
                     value={produto.preco}
-                    onChange={(e) => setProduto({...produto, preco: e.target.value})}
+                    onChange={(e) => setProduto({ ...produto, preco: parseFloat(e.target.value) })}
                 />
 
-                {/* Campo para editar a quantidade */}
                 <label>Quantidade:</label>
                 <input
                     type="number"
                     value={produto.quantidade}
-                    onChange={(e) => setProduto({...produto, quantidade: e.target.value})}
+                    onChange={(e) => setProduto({ ...produto, quantidade: parseInt(e.target.value) })}
                 />
 
                 <button type="submit">Salvar</button>
