@@ -58,12 +58,6 @@ function EditarProduto() {
             <div className='editor'>
                 <h2>Editar Produto</h2>
                 <form onSubmit={handleSubmit}>
-                    <label>Código:</label>
-                    <input
-                        type="text"
-                        value={produto.codigo}
-                        onChange={(e) => setProduto({...produto, codigo: e.target.value})}
-                    />
 
                     <label>Nome:</label>
                     <input
