@@ -1,9 +1,9 @@
 .containerlistavendas {
-    display: flex; /* Usar flexbox para dividir o espaço */
-    width: 100vw; /* Ocupa toda a largura da tela */
-    height: 100vh; /* Ocupa toda a altura da tela */
-    margin: 0; /* Remove margens padrão */
-    padding: 0; /* Remove padding padrão */
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 
 }
 
@@ -58,15 +58,13 @@ input[type="date"] {
 .botoeslistavenda{
     flex-wrap: wrap;
     display: flex;
-    flex-direction: row; /* Coloca os botões em coluna */
-    justify-content: center; /* Centraliza verticalmente */
-       /* Centraliza horizontalmente */
+    flex-direction: row;
+    justify-content: center;
     gap: 10px;
     margin-top: 20px;
 }
 
 .buscar{
-
     padding: 8px 10px;
     background-color: green;
     color: #fff;
@@ -77,7 +75,6 @@ input[type="date"] {
 }
 
 .limpar{
-
     padding: 8px 10px;
     background-color:  #066699;
     color: #fff;
@@ -92,7 +89,6 @@ input[type="date"] {
 }
 
 .listavendas {
-
     box-sizing: border-box;
     overflow-y: auto;
     border: 1px solid #ccc;

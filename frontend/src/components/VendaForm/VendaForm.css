@@ -1,9 +1,9 @@
 .containervendas {
-    display: flex; /* Usar flexbox para dividir o espaço */
-    width: 100%; /* Ocupa toda a largura da tela */
-    height: 100vh; /* Ocupa toda a altura da tela */
-    margin: 0; /* Remove margens padrão */
-    padding: 0; /* Remove padding padrão */
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 
@@ -49,7 +49,7 @@
     margin-bottom: 15px;
 }
 
-/* Estilo para os rótulos */
+
 .formulario label {
     display: block;
     font-weight: bold;
@@ -57,7 +57,7 @@
     color: #f9f9f9;
 }
 
-/* Estilo para os campos de entrada */
+
 input[type="text"],
 input[type="number"],
 select {
@@ -69,7 +69,7 @@ select {
     margin-bottom: 10px;
 }
 
-/* Estilo para mensagens de erro */
+
 span {
     color: red;
     font-size: 14px;
@@ -98,9 +98,9 @@ span {
 
 .botoesitens{
     display: flex;
-    flex-direction: row; /* Coloca os botões em coluna */
-    justify-content: center; /* Centraliza verticalmente */
-    align-items: center;     /* Centraliza horizontalmente */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 

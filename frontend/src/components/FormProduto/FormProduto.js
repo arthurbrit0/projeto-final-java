@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './FormProduto.css'
-import Menu from "./Menu/Menu";
+import Menu from "../Menu/Menu";
 
 const FormProduto = () => {
     const [produto, setProduto] = useState({

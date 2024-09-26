@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 import {useNavigate} from "react-router-dom";
-import Menu from "./Menu/Menu";
+import Menu from "../Menu/Menu";
 
 const Home = () => {
     return (

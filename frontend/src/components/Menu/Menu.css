@@ -5,8 +5,8 @@
     position: relative;
     left: 0px;
     background: rgba(78, 215, 224, 0.4);
-    border-right: 2px solid #072969; /* Borda no lado direito */
-    padding: 20px; /* Espaçamento interno */
+    border-right: 2px solid #072969;
+    padding: 20px;
     align-items: center;
     height: 400px;
     border-bottom: 2px solid #072969;
@@ -31,5 +31,5 @@
 }
 
 .botao:hover {
-    background-color: #0FA3F1; /* Cor de fundo ao passar o mouse */
+    background-color: #0FA3F1;
 }

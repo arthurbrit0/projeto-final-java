@@ -1,11 +1,11 @@
 import React from 'react';
 import {BrowserRouter as Router, Routes, Route, Link, useNavigate} from 'react-router-dom';
-import Home from './components/Home';
-import ProdutoList from './components/ProdutoList';
-import FormProduto from './components/FormProduto';
-import VendaList from './components/VendaList';
-import VendaForm from './components/VendaForm';
-import EditarProduto from './components/EditarProduto'; // Novo componente de edição de produto
+import Home from './components/Home/Home';
+import ProdutoList from './components/ProdutoList/ProdutoList';
+import FormProduto from './components/FormProduto/FormProduto';
+import VendaList from './components/VendaList/VendaList';
+import VendaForm from './components/VendaForm/VendaForm';
+import EditarProduto from './components/EditarProduto/EditarProduto';
 import './App.css'
 function App() {
     return (
@@ -18,7 +18,7 @@ function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/produtos" element={<ProdutoList />} />
                 <Route path="/produtos/nova" element={<FormProduto />} />
-                <Route path="/produtos/editar/:id" element={<EditarProduto />} /> {/* Rota para editar produto */}
+                <Route path="/produtos/editar/:id" element={<EditarProduto />} />
                 <Route path="/vendas" element={<VendaList />} />
                 <Route path="/vendas/nova" element={<VendaForm />} />
             </Routes>
@@ -28,11 +28,3 @@ function App() {
 
 export default App;
 
-
-/*<
-li className='botao'><Link to="/">Home</Link></li>
-                    <button className='botao'><Link to="/produtos">Produtos</Link></button>
-                    <button className='botao'><Link to="/produtos/nova">Novo Produto</Link></button>
-                    <button className='botao'><Link to="/vendas">Vendas</Link></button>
-                    <button className='botao'><Link to="/vendas/nova">Nova Venda</Link></button>
-                    */

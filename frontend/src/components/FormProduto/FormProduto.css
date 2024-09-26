@@ -1,11 +1,11 @@
 .containernovoproduto{
-    display: flex; /* Usar flexbox para dividir o espaço */
-    width: 100%; /* Ocupa toda a largura da tela */
-    height: 100vh; /* Ocupa toda a altura da tela */
-    margin: 0; /* Remove margens padrão */
-    padding: 0; /* Remove padding padrão */
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
-/* Estilos para a caixa do formulário */
+
 .caixa {
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -19,7 +19,7 @@
     top: 5%;
 }
 
-/* Título do formulário */
+
 .caixa h2 {
     font-family: 'ADLaM Display';
     font-style: normal;
@@ -29,7 +29,7 @@
     margin-bottom: 20px;
 }
 
-/* Estilos gerais para os campos do formulário */
+
 .caixa form div {
     margin-bottom: 15px;
 }
@@ -50,13 +50,13 @@
     box-sizing: border-box;
 }
 
-/* Estilos para as mensagens de erro */
+
 .caixa span {
     color: red;
     font-size: 14px;
 }
 
-/* Estilos para o botão de submissão */
+
 .caixa button {
     width: 100%;
     padding: 10px 15px;
@@ -68,12 +68,12 @@
     font-size: 16px;
 }
 
-/* Estilo do botão ao passar o mouse */
+
 .caixa button:hover {
     background-color: #054a7a;
 }
 
-/* Mensagem de feedback após o envio */
+
 .alerta {
     text-align: center;
     font-size: 16px;
