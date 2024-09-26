@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Menu from "./Menu/Menu";
+import './EditarProduto.css'
 
 function EditarProduto() {
     const { id } = useParams(); // Obtenha o ID da URL
@@ -52,48 +53,50 @@ function EditarProduto() {
     if (!produto) return <div>Carregando...</div>;
 
     return (
-        <div>
+        <div className='containerEditar'>
             <Menu />
-            <h2>Editar Produto</h2>
-            <form onSubmit={handleSubmit}>
-                <label>Código:</label>
-                <input
-                    type="text"
-                    value={produto.codigo}
-                    onChange={(e) => setProduto({ ...produto, codigo: e.target.value })}
-                />
+            <div className='editor'>
+                <h2>Editar Produto</h2>
+                <form onSubmit={handleSubmit}>
+                    <label>Código:</label>
+                    <input
+                        type="text"
+                        value={produto.codigo}
+                        onChange={(e) => setProduto({...produto, codigo: e.target.value})}
+                    />
 
-                <label>Nome:</label>
-                <input
-                    type="text"
-                    value={produto.nome}
-                    onChange={(e) => setProduto({ ...produto, nome: e.target.value })}
-                />
+                    <label>Nome:</label>
+                    <input
+                        type="text"
+                        value={produto.nome}
+                        onChange={(e) => setProduto({...produto, nome: e.target.value})}
+                    />
 
-                <label>Descrição:</label>
-                <input
-                    type="text"
-                    value={produto.descricao}
-                    onChange={(e) => setProduto({ ...produto, descricao: e.target.value })}
-                />
+                    <label>Descrição:</label>
+                    <input
+                        type="text"
+                        value={produto.descricao}
+                        onChange={(e) => setProduto({...produto, descricao: e.target.value})}
+                    />
 
-                <label>Preço:</label>
-                <input
-                    type="number"
-                    step="0.01"
-                    value={produto.preco}
-                    onChange={(e) => setProduto({ ...produto, preco: parseFloat(e.target.value) })}
-                />
+                    <label>Preço:</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        value={produto.preco}
+                        onChange={(e) => setProduto({...produto, preco: parseFloat(e.target.value)})}
+                    />
 
-                <label>Quantidade:</label>
-                <input
-                    type="number"
-                    value={produto.quantidade}
-                    onChange={(e) => setProduto({ ...produto, quantidade: parseInt(e.target.value) })}
-                />
+                    <label>Quantidade:</label>
+                    <input
+                        type="number"
+                        value={produto.quantidade}
+                        onChange={(e) => setProduto({...produto, quantidade: parseInt(e.target.value)})}
+                    />
 
-                <button type="submit">Salvar</button>
-            </form>
+                    <button type="submit">Salvar</button>
+                </form>
+            </div>
         </div>
     );
 }

@@ -52,67 +52,70 @@ const VendaList = () => {
             }
         }
     };
+    const handleClear = () => {
+        setVendedor('');  // Limpa o campo vendedor
+        setDataVenda('');  // Limpa o campo data
+        fetchVendas();     // Recarrega todas as vendas
+    };
 
     return (
         <div className='containerlistavendas'>
             <Menu/>
-            <h2>Lista de Vendas</h2>
-            {/* Formulário de busca */}
-            <form onSubmit={handleSearch}>
-                <div>
-                    <label>Vendedor:</label>
-                    <input
-                        type="text"
-                        value={vendedor}
-                        onChange={(e) => setVendedor(e.target.value)}
-                        placeholder="Nome do vendedor"
-                    />
+            <div className='site'>
+                {/* Formulário de busca */}
+                <form className="busca" onSubmit={handleSearch}>
+                    <div>
+                        <label>Vendedor:</label>
+                        <input
+                            type="text"
+                            value={vendedor}
+                            onChange={(e) => setVendedor(e.target.value)}
+                            placeholder="Nome do vendedor"
+                        />
+                    </div>
+                    <div>
+                        <label>Data da Venda:</label>
+                        <input
+                            type="date"
+                            value={dataVenda}
+                            onChange={(e) => setDataVenda(e.target.value)}
+                        />
+                    </div>
+                    <div className='botoes'>
+                        <button className='buscar' type="submit">Buscar</button>
+                        <button className='limpar' type="button" onClick={handleClear}>Limpar</button>
+                    </div>
+                </form>
+
+                <div className="listavendas">
+                    <h2>Lista de Vendas</h2>
+                    {vendas.map((venda) => (
+                        <div key={venda.id} className="venda">
+                            <div className="vendaid">
+                                <h3>Venda #{venda.id}</h3>
+                                <span className="vendadata">{new Date(venda.data).toLocaleString()}</span>
+                            </div>
+                            <div className="cartao">
+                                <p><strong>Vendedor:</strong> {venda.vendedor}</p>
+                                <p><strong>Produtos Comprados:</strong></p>
+                                <ul>
+                                    {venda.itens.map((item) => (
+                                        <li key={item.id}>
+                                            {item.produtoNome} - Quantidade: {item.quantidade} - Valor Total:
+                                            R${(item.quantidade * item.precoUnitario).toFixed(2)}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="borda">
+                                <p><strong>Valor Total:</strong> R${venda.valorTotal.toFixed(2)}</p>
+                                <button className="excluir" onClick={() => handleDelete(venda.id)}>Excluir</button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-                <div>
-                    <label>Data da Venda:</label>
-                    <input
-                        type="date"
-                        value={dataVenda}
-                        onChange={(e) => setDataVenda(e.target.value)}
-                    />
-                </div>
-                <button type="submit">Buscar</button>
-            </form>
-            <table border="1">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Data</th>
-                    <th>Vendedor</th>
-                    <th>Produtos Comprados</th>
-                    <th>Valor Total</th>
-                    <th>Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                {vendas.map(venda => (
-                    <tr key={venda.id}>
-                        <td>{venda.id}</td>
-                        <td>{new Date(venda.data).toLocaleString()}</td>
-                        <td>{venda.vendedor}</td>
-                        <td>
-                            <ul>
-                                {venda.itens.map(item => (
-                                    <li key={item.id}>
-                                        {item.produtoNome} - Quantidade: {item.quantidade} - Valor Total:
-                                        R${(item.quantidade * item.precoUnitario).toFixed(2)}
-                                    </li>
-                                ))}
-                            </ul>
-                        </td>
-                        <td>R${venda.valorTotal.toFixed(2)}</td>
-                        <td>
-                            <button onClick={() => handleDelete(venda.id)}>Excluir</button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+
+            </div>
         </div>
     );
 };

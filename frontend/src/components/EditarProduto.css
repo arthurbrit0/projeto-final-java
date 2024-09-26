@@ -1,26 +1,27 @@
-.containernovoproduto{
-    display: flex; /* Usar flexbox para dividir o espaço */
+.containerEditar {
+    display: flex;
     width: 100%; /* Ocupa toda a largura da tela */
     height: 100vh; /* Ocupa toda a altura da tela */
     margin: 0; /* Remove margens padrão */
     padding: 0; /* Remove padding padrão */
 }
-/* Estilos para a caixa do formulário */
-.caixa {
+
+
+
+.editor {
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
     width: 500px;
     margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 580px;
+    height: 540px;
     position: relative;
     right: 1%;
     top: 5%;
 }
 
-/* Título do formulário */
-.caixa h2 {
+.editor h2 {
     font-family: 'ADLaM Display';
     font-style: normal;
     font-size: 40px;
@@ -29,35 +30,25 @@
     margin-bottom: 20px;
 }
 
-/* Estilos gerais para os campos do formulário */
-.caixa form div {
-    margin-bottom: 15px;
-}
-
-.caixa label {
+.editor label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
     color: #f9f9f9;
 }
 
-.caixa input[type="text"],
-.caixa input[type="number"] {
+
+.editor input[type="text"],
+.editor input[type="number"] {
     width: 100%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    margin-bottom: 15px;
 }
 
-/* Estilos para as mensagens de erro */
-.caixa span {
-    color: red;
-    font-size: 14px;
-}
-
-/* Estilos para o botão de submissão */
-.caixa button {
+.editor button {
     width: 100%;
     padding: 10px 15px;
     background-color: #066699;
@@ -69,15 +60,6 @@
 }
 
 /* Estilo do botão ao passar o mouse */
-.caixa button:hover {
+.editor button:hover {
     background-color: #054a7a;
 }
-
-/* Mensagem de feedback após o envio */
-.alerta {
-    text-align: center;
-    font-size: 16px;
-    color: red;
-    margin-top: 20px;
-}
-

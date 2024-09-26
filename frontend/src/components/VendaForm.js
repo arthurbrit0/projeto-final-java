@@ -105,11 +105,10 @@ const VendaForm = () => {
     return (
         <div className='containervendas'>
             <Menu/>
-            {/* <h2>{id ? 'Editar Venda' : 'Nova Venda'}</h2> */}
             <div className='formulario'>
                 <form onSubmit={handleSubmit}>
                     <div className='info'>
-                        <h2>{id ? 'Editar Venda' : 'Nova Venda'}</h2>
+                        <h2>Nova Venda</h2>
                         <label>Vendedor:</label>
                         <input
                             type="text"
@@ -165,11 +164,11 @@ const VendaForm = () => {
                                     step="0.01"
                                 />
                             </div>
-                            <button type="button" onClick={() => removeItem(index)}>Remover Item</button>
+                            <button className='remover' type="button" onClick={() => removeItem(index)}>Remover Item</button>
                         </div>
                     ))}
-                    <button type="button" onClick={addItem}>Adicionar Item</button>
-                    <button type="submit">Salvar Venda</button>
+                    <button className='adicionar' type="button" onClick={addItem}>Adicionar Item</button>
+                    <button className='salvar' type="submit">Salvar Venda</button>
                 </form>
             </div>
             {mensagem && <p>{mensagem}</p>}

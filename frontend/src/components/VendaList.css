@@ -4,4 +4,191 @@
     height: 100vh; /* Ocupa toda a altura da tela */
     margin: 0; /* Remove margens padrão */
     padding: 0; /* Remove padding padrão */
+
+}
+
+
+.site {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 70%;
+    position: relative;
+
+}
+
+
+
+.busca{
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 70%;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    right: 1%;
+    top: 5%;
+}
+
+
+input[type="text"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.busca label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #f9f9f9;
+}
+
+.botoes{
+    flex-wrap: wrap;
+    display: flex;
+}
+
+.buscar{
+    width: 100%;
+    padding: 8px 10px;
+    background-color: green;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.limpar{
+    width: 100%;
+    padding: 8px 10px;
+    background-color:  #066699;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.busca button:hover {
+    opacity: 80%;
+}
+
+/*button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button[type="button"] {
+    background-color: #f44336;
+}
+
+button[type="button"]:hover {
+    background-color: #d32f2f;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+.listavendas {
+
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    right: 1%;
+    top: 5%;
+
+
+
+    display: flex;               /* Usar flexbox para alinhar as caixinhas */
+    flex-wrap: wrap;            /* Permite que as caixinhas se movam para a próxima linha quando não houver espaço */
+    gap: 10px;                  /* Espaçamento entre as caixinhas */
+    justify-content: center;
+}
+
+.venda {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.vendaid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.vendaid h3 {
+    margin: 0;
+}
+
+.vendadata {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.cartao {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px 0;
+}
+
+.borda {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.excluir {
+    background-color: #f44336;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.excluir:hover {
+    background-color: #d32f2f;
 }
