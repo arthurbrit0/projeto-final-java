@@ -31,16 +31,27 @@
 }
 
 /* Estilos para o formulário */
-.form {
-    max-width: 600px;
+.formulario {
+    /*max-width: 700px;
     margin: 0 auto;
     padding: 20px;
-    background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    border: 1px solid #ccc;*/
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 520px;
+    position: relative;
+    right: 1%;
+    top: 5%;
 }
 
-.form div {
+.formulario div {
     margin-bottom: 15px;
 }
 
@@ -71,7 +82,7 @@ span {
 }
 
 /* Estilo para os itens */
-form > div > div {
+formulario > div > div {
     padding: 15px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
